@@ -54,7 +54,7 @@ const SendingForm: React.FC<PropsType> = props => {
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    let interval = 2;
+    let interval = 0;
     if (message) {
       setLoading(true);
       // uncheckAllGroups();
@@ -62,7 +62,7 @@ const SendingForm: React.FC<PropsType> = props => {
         groups
           .filter(group => group.checked)
           .map(group => {
-            interval += 2;
+            interval++;
             return reflect(
               new Promise((resolve, reject) => {
                 setTimeout(() => {

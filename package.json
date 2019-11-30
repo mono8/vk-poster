@@ -1,7 +1,7 @@
 {
   "name": "vk-bot",
   "version": "0.1.0",
-  "homepage": "https://mono8.github.io/vkscript",
+  "homepage": "https://mono8.github.io/vk-poster",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.7.0",

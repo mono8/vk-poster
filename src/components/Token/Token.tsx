@@ -2,13 +2,29 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 import styles from "./Token.module.sass";
 import { VERSION } from "../../consts";
+import { connect } from "react-redux";
+import { AppStateType } from "../../store";
+import { changeToken } from "../../store/user/actions";
 
 type PropsType = {
-  getToken: (x: any) => any;
+  changeToken: typeof changeToken;
+  token: string;
 };
 
 const Token: React.FC<PropsType> = props => {
-  const { getToken } = props;
+  const { changeToken, token } = props;
+
+  const getToken = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.value) return;
+    try {
+      const url = new URL(e.target.value.replace("#", "?"));
+      const accessToken = url.searchParams.get("access_token");
+      if (accessToken) changeToken(accessToken);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className={styles.container}>
       <a
@@ -22,9 +38,16 @@ const Token: React.FC<PropsType> = props => {
         label="Токен"
         variant="outlined"
         onChange={getToken}
+        value={token}
       ></TextField>
     </div>
   );
 };
 
-export default Token;
+const mapStateToProps = (state: AppStateType) => {
+  return {
+    token: state.user.token,
+  };
+};
+
+export default connect(mapStateToProps, { changeToken })(Token);
